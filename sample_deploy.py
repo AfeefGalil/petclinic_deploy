@@ -136,7 +136,7 @@ class SampleDeploySettings(AbcDeploySettings):
     sudo ./aws/install
     rm awscliv2.zip
     aws s3 cp """ + os.environ.get('chef_zip') + """ my-chef.zip
-    sudo unzip my-chef.zip
+    sudo unzip -j my-chef.zip -d my-chef
     cd my-chef
     echo '{"art_name":"petclinic-22-main.jar"}' >> /etc/attributes
 	sudo chef-solo -c solo.rb -o 'recipe[petclinic]' -j /etc/attributes --log_level info --chef-license=accept
