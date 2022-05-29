@@ -128,12 +128,9 @@ class SampleDeploySettings(AbcDeploySettings):
 	wget https://packages.chef.io/files/stable/chef-workstation/21.10.640/ubuntu/20.04/chef-workstation_21.10.640-1_amd64.deb
 	sudo dpkg -i chef-workstation_21.10.640-1_amd64.deb
 	sudo rm chef-workstation_21.10.640-1_amd64.deb
-	git clone https://github.com/AfeefGalil/my-chef.git
-	cd my-chef/cookbooks/petclinic/
-	sudo berks vendor /home/ubuntu/my-chef/site_cookbooks
-	cd /home/ubuntu/my-chef
 	sudo apt install default-jre -y
 	sudo apt install mysql-server -y
+    sudo apt install zip unzip -y
 	sudo chef-solo -c solo.rb -o 'recipe[petclinic]' --log_level info --chef-license=accept
 	""" % the_dict
         return ret_val
