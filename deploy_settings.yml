@@ -1,0 +1,21 @@
+roles:
+  afeefPetclinic:
+    chef_role: ubuntu
+    node_role: afeefPetclinic
+    auto_spotting: {default: false} #if were using spot instances change to true
+    sgs: #name of the SG group name
+     - AfeefPetShopClinicStack-StagingPublicSecurityGroup-D3643HA2RUOR
+    iam_profile: ${ENV}Petclinic #iAM role name in AWS (must be already created)
+    ami_id: ami-0aeb7c931a5a61206
+    elb: afeefPetClinicELB # the name of the classic load balancer you want to attach the ec2`s to
+    aws_azs:
+     - us-east-2a
+     - us-east-2b
+    terminate_previous_asg: true
+
+general:
+ key_names:
+  staging: afeef_petshop #keypair name thats used to ssh to the instances
+
+ vpcs: #VPC id that we are creating the ASG in
+  staging: vpc-02a9d0c7e0c8ee7a2
