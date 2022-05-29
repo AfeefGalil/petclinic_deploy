@@ -122,7 +122,7 @@ class SampleDeploySettings(AbcDeploySettings):
         else:
             the_dict['CHEF_SERVER_ENV'] = 'Testing'
         the_dict['ASG_ID'] = self.asg_name_template() % settings.context
-        ret_val = f"""#!/bin/bash
+        ret_val = """#!/bin/bash
 	sudo apt-get update -y
 	cd /home/ubuntu
 	wget https://packages.chef.io/files/stable/chef-workstation/21.10.640/ubuntu/20.04/chef-workstation_21.10.640-1_amd64.deb
@@ -135,12 +135,13 @@ class SampleDeploySettings(AbcDeploySettings):
     unzip awscliv2.zip
     sudo ./aws/install
     rm awscliv2.zip
-    aws s3 cp {os.environ.get('chef_zip')} my-chef.zip
+    aws s3 cp {0} my-chef.zip
     sudo unzip my-chef.zip
     cd my-chef
     echo '{'petclinet':{'art_name':'petclinic-22-main.jar'}}' >> /etc/attributes
 	sudo chef-solo -c solo.rb -o 'recipe[petclinic]' -j /etc/attributes --log_level info --chef-license=accept
 	""" % the_dict
+        ret_val.format(os.environ.get('chef_zip'))
         return ret_val
 
 
