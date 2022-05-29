@@ -1,1 +1,0 @@
-Deployed_asg: afeefPetclinic_staging_1_19May_112628
