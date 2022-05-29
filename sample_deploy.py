@@ -131,6 +131,13 @@ class SampleDeploySettings(AbcDeploySettings):
 	sudo apt install default-jre -y
 	sudo apt install mysql-server -y
     sudo apt install zip unzip -y
+    curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+    unzip awscliv2.zip
+    sudo ./aws/install
+    rm awscliv2.zip
+    aws s3 cp os.environ.get('chef_zip') my-chef.zip
+    sudo unzip my-chef.zip
+    cd my-chef
 	sudo chef-solo -c solo.rb -o 'recipe[petclinic]' --log_level info --chef-license=accept
 	""" % the_dict
         return ret_val
