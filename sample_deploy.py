@@ -138,7 +138,7 @@ class SampleDeploySettings(AbcDeploySettings):
     aws s3 cp {0} my-chef.zip
     sudo unzip my-chef.zip
     cd my-chef
-    echo '{'petclinic':{'art_name':'petclinic-22-main.jar'}}' >> /etc/attributes
+    echo '{'art_name':'petclinic-22-main.jar'}' >> /etc/attributes
 	sudo chef-solo -c solo.rb -o 'recipe[petclinic]' -j /etc/attributes --log_level info --chef-license=accept
 	""" % the_dict
         ret_val.format(os.environ.get('chef_zip'))
