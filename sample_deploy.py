@@ -140,7 +140,7 @@ class SampleDeploySettings(AbcDeploySettings):
     sudo unzip my-chef.zip -d my-chef
     sudo rm my-chef.zip
     cd my-chef
-    echo '{"petclinic":{"art_name":"petclinic-22-main.jar"}}' >> /etc/attributes
+    echo '{"petclinic":{"art_name":"^aws_petclinic_artifact"}}' >> /etc/attributes
 	sudo chef-solo -c solo.rb -o 'recipe[petclinic]' -j /etc/attributes --log_level info --chef-license=accept
 	""" % the_dict
         return ret_val
