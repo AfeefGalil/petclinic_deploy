@@ -107,6 +107,8 @@ class SampleDeploySettings(AbcDeploySettings):
         parser.add_argument('--spot-percent', help='override the percentage of the spot pricing', default=None)
         parser.add_argument('--on-demand', required=False, default=False, action='store_true',
                             help='set this flag to force on-demand instances (prevent using spots)')
+        parser.add_argument('--aws-chef-artifact', help='aws chef zip file path', default=None)
+        parser.add_argument('--aws-petclinic-artifact', help='aws petclinic artifact name', default=None)
         return parser
 
     def get_keyname(self):
@@ -129,13 +131,12 @@ class SampleDeploySettings(AbcDeploySettings):
 	sudo dpkg -i chef-workstation_21.10.640-1_amd64.deb
 	sudo rm chef-workstation_21.10.640-1_amd64.deb
 	sudo apt install default-jre -y
-	sudo apt install mysql-server -y
     sudo apt install zip unzip -y
     curl 'https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip' -o 'awscliv2.zip'
     unzip awscliv2.zip
     sudo ./aws/install
     rm awscliv2.zip
-    aws s3 cp """ + os.environ.get('chef_zip') + """ my-chef.zip
+    aws s3 cp ^aws_chef_artifact my-chef.zip
     sudo unzip my-chef.zip -d my-chef
     sudo rm my-chef.zip
     cd my-chef
