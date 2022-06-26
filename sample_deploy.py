@@ -127,21 +127,24 @@ class SampleDeploySettings(AbcDeploySettings):
         ret_val = """#!/bin/bash
 	sudo apt-get update -y
 	cd /home/ubuntu
-	wget https://packages.chef.io/files/stable/chef-workstation/21.10.640/ubuntu/20.04/chef-workstation_21.10.640-1_amd64.deb
-	sudo dpkg -i chef-workstation_21.10.640-1_amd64.deb
-	sudo rm chef-workstation_21.10.640-1_amd64.deb
 	sudo apt install default-jre -y
     sudo apt install zip unzip -y
     curl 'https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip' -o 'awscliv2.zip'
     unzip awscliv2.zip
     sudo ./aws/install
     rm awscliv2.zip
-    aws s3 cp ^aws_chef_artifact my-chef.zip
-    sudo unzip my-chef.zip -d my-chef
-    sudo rm my-chef.zip
-    cd my-chef
-    echo '{"petclinic":{"art_name":"^aws_petclinic_artifact"}}' >> /etc/attributes
-	sudo chef-solo -c solo.rb -o 'recipe[petclinic]' -j /etc/attributes --log_level info --chef-license=accept
+    rm aws/
+    aws s3 cp s3://afeef-tc-petclinic/petclinic-35-afeef-petclinic.jar afeef-petclinic.jar
+    sudo chmod '0755' afeef-petclinic.jar
+
+    aws s3 cp s3://afeef-tc-petclinic/petclinic.service /etc/systemd/system/petclinic.service
+    sudo chmod '0755' /etc/systemd/system/petclinic.service
+
+    aws s3 cp s3://afeef-tc-petclinic/application.properties application.properties
+    sudo chmod '0755' application.properties
+
+    sudo systemctl daemon-reload
+    sudo service petclinic start
 	""" % the_dict
         return ret_val
 
